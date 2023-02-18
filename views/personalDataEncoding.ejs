@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" type="text/css"   href="/css/style.css">
+<head>
+  <title>Encodage des voyageurs</title>
+</head>
+<body>
+  <h1>Encodage des voyageurs</h1>
+  <form action="/addNameAge" method="post">
+    
+    <% for(var i = 0; i < nbPlaces; i++) { %>
+      <p>Nom du voyageur <%= i + 1 %>: <input type="text" name="nom_voyageur_<%= i + 1 %>"></p>
+      <p>Age du voyageur <%= i + 1 %>: <input type="number" name="age_voyageur_<%= i + 1 %>"></p>
+    <% } %>
+    <button type="submit" name="submit">Etape suivante</button>
+    <button type="submit" name="cancel" formaction="/annuler">Annuler la réservation</button>
+  </form>
+</body>
+</html>

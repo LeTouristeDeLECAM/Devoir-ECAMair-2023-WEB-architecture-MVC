@@ -1,0 +1,28 @@
+body {
+    width: 500px;
+    height: 400px;
+    font-family: Arial;
+    font-size: 12px;
+    border: 1px solid black;
+    margin: 10px;
+    padding: 10px;
+    background-color: lightblue;
+    
+  }
+  
+  form {
+    border: 1px solid black;
+    width: 400px;
+    margin: 10px;
+    padding: 10px;
+    
+  }
+  
+  label, input {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding: 10px;
+  }
+  

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" type="text/css"   href="/css/style.css">
+<head>
+  <title>Validation des réservations</title>
+</head>
+<body>
+  <h1>Validation des réservations</h1>
+  <p>Destination : <%= reservationData.destination %></p>
+  <p>Assurance : <%= reservationData.assurance %></p>
+  <p>Prix : <%= reservationData.prix %></p>
+  <p>Liste des passagers :</p>
+  <ul>
+    <% for(var i = 0; i < voyageurs.length; i++) { %>
+      <li><%= voyageurs[i].nom %> => <%= voyageurs[i].age %> ans</li>
+    <% } %>
+  </ul>
+  <form action="/confirmation" method="post">
+    <input type="submit" value="Etape suivante">
+    <input type="submit" value="Annuler la réservation" formaction="/annuler">
+  </form>
+</body>
+</html>

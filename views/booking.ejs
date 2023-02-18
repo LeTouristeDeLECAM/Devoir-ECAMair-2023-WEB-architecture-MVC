@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <link rel="stylesheet" type="text/css"   href="/css/style.css">
+  <head>
+    <title>Réservation</title>
+  </head>
+  <body>
+    <h1>Réservation</h1>
+    <form action="/addReservation" method="post" name="reservation">
+      <p>
+        <label for="destination">Destination :</label>
+        <input type="text" id="destination" name="destination">
+      </p>
+      <p>
+        <label for="places">Nombre de places :</label>
+        <input type="number" id="places" name="places" onchange="calculateTotal()">
+      </p>
+      <p>
+        <input type="checkbox" id="assurance" name="assurance" onchange="calculateTotal()">
+        <label for="assurance">Assurance optionnelle</label>
+      </p>
+      <p>
+        Coût total : <span id="total"></span>€
+      </p>
+      <button type="submit">Etape suivante</button>
+    </form>
+
+    <script>
+      function calculateTotal() {
+        let places = document.querySelector("#places").value;
+        let assurance = document.querySelector("#assurance").checked;
+        let total = places * 45 + (assurance ? 20 : 0);
+        document.querySelector("#total").innerHTML = total;
+      }
+    </script>
+  </body>
+</html>
