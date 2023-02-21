@@ -8,11 +8,11 @@
   <h1>Validation des réservations</h1>
   <p>Destination : <%= reservationData.destination %></p>
   <p>Assurance : <%= reservationData.assurance %></p>
-  <p>Prix : <%= reservationData.prix %></p>
+  <p>Prix : <%= prixBillet %></p>
   <p>Liste des passagers :</p>
   <ul>
-    <% for(var i = 0; i < voyageurs.length; i++) { %>
-      <li><%= voyageurs[i].nom %> => <%= voyageurs[i].age %> ans</li>
+    <% for(var i = 0; i < voyageur.length; i++) { %>
+      <li><%= voyageur[i].nom %> => <%= voyageur[i].age %> ans</li>
     <% } %>
   </ul>
   <form action="/confirmation" method="post">

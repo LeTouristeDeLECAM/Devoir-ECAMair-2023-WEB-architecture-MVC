@@ -1,25 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const Reservation = require("../models/flightModel");
-const Voyageur = require("../models/voyageurModel");
 let reservationData;
 
 
-// Récupération des données pour la première étape : choix de la destination, du nombre de places et de l'assurance
+
 
 
 exports.reservation = function (request, response ){
-
-    if (request.session.reservationData != undefined) reservationData = request.session.reservationData
-    console.log(reservationData);
     response.render("../views/booking.ejs", { title: "Réservation" })
-    
-
 }; 
 
-// Enregistrement des données pour la première étape
 
+// Récupération des données pour la première étape : choix de la destination, du nombre de places et de l'assurance
 exports.addReservation= (request, response) => {
+
+    
 
     const data = {
         destination: request.body.destination,
@@ -27,31 +23,30 @@ exports.addReservation= (request, response) => {
         assurance: request.body.assurance
     };
 
-    let prixBillet = 45 * data.nbPlaces;
-    if (data.assurance === "on") {
-        prixBillet += 20;
-    }
+    reservationData = new Reservation (data.destination, data.nbPlaces, data.assurance) 
 
-    let reservationData = new Reservation (data.destination, data.nbPlaces, data.assurance, prixBillet) 
+    if (request.session.reservationData != undefined) reservationData = request.session.reservationData
+
+    reservationData.setPrixBillet(); // calcul du prix avec la méthode de class
+    console.log("le prix est : "+reservationData.getPrixBillet());
+
     request.session.reservationData = reservationData;
     console.log(reservationData)
 
-    //response.redirect("/encodage")
     response.render("../views/personalDataEncoding.ejs", { title: "Encodage des voyageurs", nbPlaces: data.nbPlaces }); 
 }
 
 
-// Enregistrement des données pour la deuxième étape : encodage des noms et âges des voyageurs
+// Enregistrement des données noms et âges des voyageurs
 
 exports.addNameAge= (request, response) => { 
-    const voyageurs = [];
-    for (let i = 1; i <= request.session.reservationData.nbPlaces; i++) {
-        voyageurs.push(new Voyageur(request.body[`nom_voyageur_${i}`], request.body[`age_voyageur_${i}`]));
-    }
-    console.log(voyageurs)
-    request.session.voyageurs = voyageurs;
 
-    response.render("../views/check.ejs", { title: "Validation des réservations", reservationData: request.session.reservationData, voyageurs: voyageurs });
+    for (let i = 1; i <= request.session.reservationData.nbPlaces; i++) {
+        reservationData.setVoyageur(request.body[`nom_voyageur_${i}`],request.body[`age_voyageur_${i}`]);
+    }
+
+    console.log("les voaygeurs: "+reservationData.getVoyageur() )
+    response.render("../views/check.ejs", { title: "Validation des réservations", reservationData: reservationData, voyageur: reservationData.getVoyageur(), prixBillet : reservationData.getPrixBillet() });
 
 }
 
@@ -69,17 +64,4 @@ exports.annuler= (request, response) => {
 
 
 
-
-
-
-/*
-
-// Enregistrement des données pour la troisième étape : validation des données
-router.post("/validation", (req, res) => {
-    // Enregistrement des données en base de données
-    // Code pour enregistrer les données en base de données
-
-    res.render("confirmation", { title: "Confirmation", reservationData: req.session.reservationData, voyageurs: req.session.voyageurs });
-});
-*/
 
